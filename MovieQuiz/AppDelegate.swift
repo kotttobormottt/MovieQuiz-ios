@@ -6,6 +6,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
+        print("Hello world for branch to merge")
         return true
     }
 
@@ -22,7 +23,5 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(
         _ application: UIApplication,
         didDiscardSceneSessions sceneSessions: Set<UISceneSession>
-    ) {
-        print("Hello world for branch to merge")
-    }
+    ) {}
 }
