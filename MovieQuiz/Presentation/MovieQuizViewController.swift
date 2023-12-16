@@ -2,22 +2,22 @@ import UIKit
 
 final class MovieQuizViewController: UIViewController {
     
-    // структура вопроса
-    struct QuizQuestion {
+    // структура-модель вопроса
+    private struct QuizQuestion {
       let image: String
       let text: String
       let correctAnswer: Bool
     }
 
-    // для состояния "Вопрос показан"
-    struct QuizStepViewModel {
+    // структура-модель для состояния "Вопрос показан"
+    private struct QuizStepViewModel {
       let image: UIImage
       let question: String
       let questionNumber: String
     }
     
-    // для состояния "Результат квиза"
-    struct QuizResultsViewModel {
+    // структура-модель для состояния "Результат квиза"
+    private struct QuizResultsViewModel {
       let title: String
       let text: String
       let buttonText: String
@@ -29,6 +29,8 @@ final class MovieQuizViewController: UIViewController {
     @IBOutlet private weak var textLabel: UILabel!
     @IBOutlet private weak var imageView: UIImageView!
     @IBOutlet private weak var counterLabel: UILabel!
+    @IBOutlet private weak var yesButton: UIButton!
+    @IBOutlet private weak var noButton: UIButton!
     
     // массив вопросов
     private let questions: [QuizQuestion] = [
@@ -92,6 +94,7 @@ final class MovieQuizViewController: UIViewController {
     private func show(quiz step: QuizStepViewModel) {
         imageView.image = step.image
         imageView.layer.cornerRadius = 20
+        imageView.layer.borderWidth = 0
         textLabel.text = step.question
         counterLabel.text = step.questionNumber
     }
@@ -119,6 +122,9 @@ final class MovieQuizViewController: UIViewController {
     
     // метод, который меняет цвет рамки
     private func showAnswerResult(isCorrect: Bool) {
+        yesButton.isEnabled = false
+        noButton.isEnabled = false
+        
         if isCorrect {
             correctAnswers += 1
         }
@@ -130,6 +136,8 @@ final class MovieQuizViewController: UIViewController {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
             self.showNextQuestionOrResults()
+            self.yesButton.isEnabled = true
+            self.noButton.isEnabled = true
         }
     }
     
