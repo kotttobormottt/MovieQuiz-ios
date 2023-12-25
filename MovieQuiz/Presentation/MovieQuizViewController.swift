@@ -2,21 +2,21 @@ import UIKit
 
 final class MovieQuizViewController: UIViewController {
     
-    // структура-модель вопроса
+    // Структура-модель вопроса
     private struct QuizQuestion {
       let image: String
       let text: String
       let correctAnswer: Bool
     }
 
-    // структура-модель для состояния "Вопрос показан"
+    // Структура-модель для состояния "Вопрос показан"
     private struct QuizStepViewModel {
       let image: UIImage
       let question: String
       let questionNumber: String
     }
     
-    // структура-модель для состояния "Результат квиза"
+    // Структура-модель для состояния "Результат квиза"
     private struct QuizResultsViewModel {
       let title: String
       let text: String
@@ -32,7 +32,7 @@ final class MovieQuizViewController: UIViewController {
     @IBOutlet private weak var yesButton: UIButton!
     @IBOutlet private weak var noButton: UIButton!
     
-    // массив вопросов
+    // Массив вопросов
     private let questions: [QuizQuestion] = [
         QuizQuestion(
             image: "The Godfather",
@@ -81,7 +81,7 @@ final class MovieQuizViewController: UIViewController {
         show(quiz: convert(model: questions[currentQuestionIndex]))
     }
     
-    // данный метод конвертирует mock данные во ViewModel
+    // Данный метод конвертирует mock данные во ViewModel
     private func convert(model: QuizQuestion) -> QuizStepViewModel {
         let questionStep = QuizStepViewModel(
             image: UIImage(named: model.image) ?? UIImage(),
@@ -90,7 +90,7 @@ final class MovieQuizViewController: UIViewController {
         return questionStep
     }
     
-    // метод выводит данные ViewModel на экран
+    // Метод выводит данные ViewModel на экран
     private func show(quiz step: QuizStepViewModel) {
         imageView.image = step.image
         imageView.layer.cornerRadius = 20
@@ -99,7 +99,7 @@ final class MovieQuizViewController: UIViewController {
         counterLabel.text = step.questionNumber
     }
     
-    // метод для показа результатов раунда квиза
+    // Метод для показа результатов раунда квиза
     private func show(quiz result: QuizResultsViewModel) {
         let alert = UIAlertController(
             title: result.title,
@@ -122,7 +122,7 @@ final class MovieQuizViewController: UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
-    // метод, который меняет цвет рамки
+    // Метод, который меняет цвет рамки
     private func showAnswerResult(isCorrect: Bool) {
         yesButton.isEnabled = false
         noButton.isEnabled = false
@@ -145,7 +145,7 @@ final class MovieQuizViewController: UIViewController {
         }
     }
     
-    // метод, который содержит логику перехода в один из сценариев
+    // Метод, который содержит логику перехода в один из сценариев
     private func showNextQuestionOrResults() {
         if currentQuestionIndex == questions.count - 1 {
             let text = "Ваш результат: \(correctAnswers)/10"
