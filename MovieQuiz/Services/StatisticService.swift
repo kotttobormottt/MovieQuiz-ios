@@ -20,8 +20,8 @@ struct GameRecord: Codable {
     let date: Date
     
     // метод сравнения по количеству верных ответов
-    func checkBetterAnswer(checkAnswer: GameRecord) -> Bool {
-        correct > checkAnswer.correct
+    func isGreaterThan(_ another: GameRecord) -> Bool {
+        correct > another.correct
     }
 }
 
@@ -93,9 +93,14 @@ final class StatisticServiceImplementation: StatisticService {
         gamesCount += 1
         correctAnswers += count
         totalQuestions += amount
-        let checkAnswer = GameRecord(correct: count, total: amount, date: Date.init())
-        if bestGame.checkBetterAnswer(checkAnswer: checkAnswer) {
-            bestGame = checkAnswer
+        let newRecord = GameRecord(correct: count, total: amount, date: Date())
+        guard let data = userDefaults.data(forKey: Keys.bestGame.rawValue),
+            let record = try? JSONDecoder().decode(GameRecord.self, from: data) else {
+            bestGame = newRecord
+            return
+        }
+        if !record.isGreaterThan(newRecord) {
+            bestGame = newRecord
         }
     }
 }
