@@ -20,7 +20,7 @@ class AlertPresenter {
             message: result.message,
             preferredStyle: .alert)
         
-        let action = UIAlertAction(title: result.title, style: .default) { _ in result.completion()}
+        let action = UIAlertAction(title: result.buttonText, style: .default, handler: result.completion)
         alert.addAction(action)
         delegate?.present(alert, animated: true, completion: nil)
     }
