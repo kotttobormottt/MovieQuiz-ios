@@ -11,9 +11,9 @@ import UIKit
 final class MovieQuizPresenter: QuestionFactoryDelegate {
     
     // MARK: Properties
-    private var statisticService: StatisticService!
+    private let statisticService: StatisticService!
     private var questionFactory: QuestionFactoryProtocol?
-    private weak var viewController: MovieQuizViewController?
+    private weak var viewController: MovieQuizViewControllerProtocol?
     private var currentQuestion: QuizQuestion?
     private var correctAnswers: Int = 0
     private let questionsAmount: Int = 10
@@ -22,7 +22,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
     var resultAlert: AlertPresenter?
     
     // MARK: Init
-    init(viewController: MovieQuizViewController) {
+    init(viewController: MovieQuizViewControllerProtocol) {
         self.viewController = viewController
         
         statisticService = StatisticServiceImplementation()
@@ -133,7 +133,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
                 restartGame()
                 
             }
-            resultAlert = AlertPresenter(delegate: viewController)
+            resultAlert = AlertPresenter(delegate: viewController as? MovieQuizViewController)
             resultAlert?.showAlert(result: viewModel)
         } else {
             switchToNextQuestion()
